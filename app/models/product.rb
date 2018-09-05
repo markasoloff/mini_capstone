@@ -1,4 +1,14 @@
 class Product < ApplicationRecord
+  #validations are the first thing written after class line
+  validates :name, presence: true
+  validates :name, uniqueness: true
+  validates :description, presence: true
+  validates :description, length: { in: 20..200 }
+  validates :image_url, uniqueness: true
+  validates :price, presence: true
+  validates :price, numericality: { greater_than: 0 }
+  
+
   def description_list
     description.split(", ")
     # 'description here acts as an attr. When applied to product.description, it will make that data dispaly as an array in browswer.'
