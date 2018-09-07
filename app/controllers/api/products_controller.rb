@@ -29,7 +29,7 @@ class Api::ProductsController < ApplicationController
   def create
     @product = Product.new(name: params[:name],
                            price: params[:price],
-                           image_url: params[:image_url],
+                           image_id: params[:image_id],
                            in_stock: params[:in_stock],
                            description: params[:description],
                            supplier_id: params[:supplier_id]
@@ -46,7 +46,7 @@ class Api::ProductsController < ApplicationController
 
       @product.name = params[:name] || @product.name,
       @product.price = params[:price] || @product.price,
-      @product.image_url = params[:image_url] || @product.image_url,
+      @product.image_id = params[:image_url] || @product.image_id,
       @product.in_stock = params[:in_stock] || @product.in_stock,
       @product.description = params[:description] || @product.description,
       @product.supplier_id = params[:supplier_id] || @product.supplier_id

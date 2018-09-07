@@ -8,10 +8,16 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
   
   belongs_to :supplier
+  has_many :images
+  # has_many :images
   #belongs_to does the same thing as the longhand method below:
   # def supplier
   #   Supplier.find_by(id: supplier_id)
   # end
+
+  def image
+    Image.where(image_id: id)
+  end
 
   def description_list
     description.split(", ")
