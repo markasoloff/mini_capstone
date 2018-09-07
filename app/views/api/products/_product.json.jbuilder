@@ -22,3 +22,8 @@ json.total product.total
     
   end
 
+#displays the supplier partial
+json.supplier do 
+  json.partial! product.supplier, partial: 'api/suppliers/supplier', as: :supplier
+#product.supplier is a single supplier object.
+end

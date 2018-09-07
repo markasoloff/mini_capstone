@@ -3,11 +3,15 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :name, uniqueness: true
   validates :description, presence: true
-  validates :description, length: { in: 20..200 }
-  validates :image_url, uniqueness: true
+  validates :description, length: { in: 1..1000 }
   validates :price, presence: true
   validates :price, numericality: { greater_than: 0 }
   
+  belongs_to :supplier
+  #belongs_to does the same thing as the longhand method below:
+  # def supplier
+  #   Supplier.find_by(id: supplier_id)
+  # end
 
   def description_list
     description.split(", ")
