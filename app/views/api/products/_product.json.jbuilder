@@ -1,10 +1,15 @@
 json.id product.id
 json.name product.name
 json.price product.price
-json.image_id product.image_id
 json.in_stock product.in_stock
 json.description product.description
 json.discounted product.is_discounted?
+
+
+# json.images do
+# json.array! @images, partial: 'images', as: :image
+# end
+
 
 if product.is_discounted?
   json.sale_message "Discounted Price"
@@ -28,6 +33,8 @@ json.supplier do
 #product.supplier is a single supplier object.
 end
 
-json.image do
-  json.partial! product.image, partial: 'api/images/image', as: :image
-end
+# json.image do
+#   json.partial! product.image, partial: 'api/images/image', as: :image
+# end
+
+json.current_user current_user
