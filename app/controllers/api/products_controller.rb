@@ -1,6 +1,14 @@
 class Api::ProductsController < ApplicationController
+  before_action :authenticate_admin, except: [:index, :show]
   def index
     @products = Product.all
+
+    category_name = params[:category]
+    if category_name
+      category = Category.find_by(name: category_name)
+      @products = category.products
+
+    end
 
     search_term = params[:search]
     if search_term
@@ -34,11 +42,12 @@ class Api::ProductsController < ApplicationController
                            description: params[:description],
                            supplier_id: params[:supplier_id]
                            )
-    if @product.save
-      render 'show.json.jbuilder'
-    else  
-      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
-    end
+
+      if @product.save
+        render 'show.json.jbuilder'
+      else  
+        render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+      end
   end
 
   def update
