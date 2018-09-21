@@ -1,13 +1,33 @@
 class Api::CartedProductsController < ApplicationController
-    def create
-    @carted_product = CartedProduct.new(product_id:params[:product_id],
-                                    quantity:params[:quantity],
-                                    status: "carted",
-                                    user_id: current_user.id
-                                    )
+  before_action :authenticate_user
 
-    
-    @carted_product.save
+  def index
+    @carted_products = current_user.carted_products.where(status: "carted")
     render 'index.json.jbuilder'
-    end
+  end
+
+
+  def create
+  @carted_product = CartedProduct.new(
+                                  product_id: params[:product_id],
+                                  quantity: params[:quantity],
+                                  status: "carted",
+                                  user_id: current_user.id
+                                     )
+  
+  @carted_product.save
+  @carted_products = CartedProduct.all
+
+  render 'show.json.jbuilder'
+  end
+
+
+  def destroy
+    @carted_product = CartedProduct.find(params[:id])
+    @carted_product.update(status: 'removed')
+    render json: {status: "Product was removed from cart."}
+  end
+
+   
+
 end
